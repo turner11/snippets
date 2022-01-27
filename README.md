@@ -1,2 +1,2 @@
 # snippets
-Repo for saving snippets to refer to
+Repo for saving my snippets for future reference
