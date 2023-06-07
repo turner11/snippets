@@ -37,6 +37,12 @@ function ccc([string]$File)
     C:\\Users\\avit\\.local\\bin\\rich.exe -n -g "$File"
 }
 
+# imitate bash's realpath
+function realpath([string]$File)
+{
+    Resolve-Path "$File"
+} 
+
 function ecr()
 {
     aws ecr get-login-password | docker login --username AWS --password-stdin <YOUR ECR REGISTRY>
