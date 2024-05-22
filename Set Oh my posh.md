@@ -26,7 +26,9 @@ $env:POSH_GIT_ENABLED=$true
 Import-Module posh-git  
 Import-Module -Name Terminal-Icons
 
-
+## Set theme
+oh-my-posh init pwsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/agnosterplus.omp.json'  | Invoke-Expression
+#For local theme:
 # oh-my-posh init pwsh --config ~/.custom.omp.json | Invoke-Expression
 
 
