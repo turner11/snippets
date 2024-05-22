@@ -1,8 +1,10 @@
-## OH MY POSH settings
-Set-PoshPrompt -Theme agnosterplus
-$env:POSH_GIT_ENABLED=$true
-Import-Module posh-git
-Import-Module oh-my-posh
+## For update oh-my-posh:
+# Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
+$env:POSH_GIT_ENABLED=$true  
+Import-Module posh-git  
+## Set theme
+oh-my-posh init pwsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/agnosterplus.omp.json'  | Invoke-Expression
+
 
 ## Make the terminal beutifull & productive
 Import-Module -Name Terminal-Icons
@@ -23,6 +25,7 @@ $env:Path += "; $env:UserProfile\\.local\\bin"
 New-Alias -Name l -value "ls"
 New-Alias -Name cc -value "rich"
 New-Alias -Name onelogin -value cloud-sso
+
 
 # shortcut for which python
 function wp()
@@ -45,5 +48,7 @@ function realpath([string]$File)
 
 function ecr()
 {
-    aws ecr get-login-password | docker login --username AWS --password-stdin <YOUR ECR REGISTRY>
+    #aws ecr get-login-password | docker login --username AWS --password-stdin <YOUR ECR REGISTRY>
 }
+
+
