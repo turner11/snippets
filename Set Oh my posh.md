@@ -1,11 +1,15 @@
-[**Install:**](https://ohmyposh.dev/docs/installation/windows)  
+[**Install:**](https://ohmyposh.dev/docs/installation/windows)  & [**Init**](https://ohmyposh.dev/docs/installation/prompt)
 ```
 Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://ohmyposh.dev/install.ps1'))
+```
+**Restart shell**
+```
+oh-my-posh init pwsh | Invoke-Expression
 Install-Module posh-git -Scope CurrentUser  
 Install-Module -Name Terminal-Icons -Repository PSGallery
 Install-Module PSReadLine -AllowPrerelease -Force
 ```
-
+___
 **Settings:**  
 create the profile file.  
 ```
