@@ -11,7 +11,10 @@ sudo apt install pipx
 pipx ensurepath
 # sudo pipx ensurepath --global 
 ```
-
+[Install uv](https://github.com/astral-sh/uv?tab=readme-ov-file#getting-started)
+```
+pipx install uv
+```
 [install rich-cli](https://github.com/Textualize/rich-cli?tab=readme-ov-file#windows--linux)
 ```
 pipx install rich-cli
