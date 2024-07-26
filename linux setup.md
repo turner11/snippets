@@ -4,6 +4,11 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 ```
 
+**Install utilities**
+```zsh
+sudo apt install vim
+```
+
 [Install zsh](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
 ```zsh
 sudo apt install zsh
