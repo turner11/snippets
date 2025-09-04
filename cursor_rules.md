@@ -40,3 +40,9 @@
 - testing python with pytest
 - testing blazor with Bunit
 - testing c# with nUnit
+
+# Virtual environment
+
+This project uses a Python virtual environment located at ./venv/
+Always activate the virtual environment before running Python code.
+Use `source ./.venv/bin/activate` (Linux/Mac) or `.\.venv\Scripts\activate` (Windows) before executing Python commands.
