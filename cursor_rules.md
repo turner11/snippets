@@ -14,6 +14,9 @@
 – Mocking data is only needed for tests, never mock data for dev or prod  
 – Never add stubbing or fake data patterns to code that affects the dev or prod environments  
 – Never overwrite my .env file without first asking and confirming
+– Always prefer python types over typing-types when possible (e.g. list vs List)
+– Always prefer pipes (|) over typing.Optional 
+– Always prefer using f-strings for string formatting and interpolation in Python, as they are more readable and efficient than older methods like % formatting or str.format()
 
 # Coding Workflow preferences
 
