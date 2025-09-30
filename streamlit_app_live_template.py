@@ -33,6 +33,8 @@ def set_url_from_class(instance):
         except ValueError:
             continue
     d = {k: v for k, v in valid_keys.items() if v not in (0, None, '')}
+    unsupported_types = [dict]
+    d = {k: v for k, v in d.items() if type(v) not in unsupported_types}
     st.query_params.update(d)
 
 
