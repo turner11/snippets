@@ -1,4 +1,3 @@
-# Insert the following to pycharm live templates
 import dataclasses
 
 import streamlit as st
@@ -33,8 +32,6 @@ def set_url_from_class(instance):
         except ValueError:
             continue
     d = {k: v for k, v in valid_keys.items() if v not in (0, None, '')}
-    unsupported_types = [dict]
-    d = {k: v for k, v in d.items() if type(v) not in unsupported_types}
     st.query_params.update(d)
 
 
@@ -58,9 +55,18 @@ def main():
                        initial_sidebar_state="expanded",
                        )
 
-    logger_format = '%(asctime)s [%(name)s] %(module)s::%(funcName)s %(levelname)s - %(message)s'
-    coloredlogs.install(level='CRITICAL', fmt=logger_format)
-    coloredlogs.install(level='DEBUG', fmt=logger_format, logger=logger, stream=sys.stdout, isatty=True)
+    l_format = '%(asctime)s [%(name)s] %(module)s::%(funcName)s %(levelname)s - %(message)s'
+    coloredlogs.install(level='CRITICAL', fmt=l_format)
+    logger_levels = {
+        'DEBUG': [logger.name],
+        'WARNING': [],
+        'INFO': [],
+        'ERROR': ['watchdog'],
+    }
+    
+    for level, loggers in logger_levels.items():
+        for lg in loggers:
+            coloredlogs.install(level=level, fmt=l_format, logger=logging.getLogger(lg), stream=sys.stdout, isatty=True)
 
     with st.sidebar:
         inputs = get_inputs()
