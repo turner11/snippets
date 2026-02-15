@@ -4,6 +4,8 @@
 # Coding pattern preferences
 
 – Always prefer simple solutions  
+– In python make sure to remove any un used imports
+– In python typing - prefer the built ins (e.g. dict over typing.Dict)
 – Avoid duplication of code whenever possible, which means checking for other areas of the codebase that might already have similar code and functionality  
 – Write code that takes into account the different environments: dev, test, and prod  
 – You are careful to only make changes that are requested or you are confident are well understood and related to the change being requested  
@@ -27,11 +29,11 @@
 - Always think about what other methods and areas of code might be affected by code changes
 
 
-# Technichal stack
+# Technical stack
 
 - Python for services
 - C# and Blazor for Web Server
-- Emgu for image processing in C#
+- Open cv for image processing (cv2 in python, Emgu in C#)
 - open cv for image processing in python
 - grpc for communicating between server and services
 - ReactiveX for processing streams
