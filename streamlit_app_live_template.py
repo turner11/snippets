@@ -20,7 +20,8 @@ def get_class_from_url(class_type: type[dataclasses.dataclass()] = None):
     return instance
 
 
-def set_url_from_class(instance):
+
+def set_url_from_class(instance, pop_default_values=True):
     instance_dict = dataclasses.asdict(instance)
     valid_keys = {}
     for key, value in instance_dict.items():
@@ -31,8 +32,18 @@ def set_url_from_class(instance):
             valid_keys[key] = value
         except ValueError:
             continue
-    d = {k: v for k, v in valid_keys.items() if v not in (0, None, '')}
+    unsupported_types = [dict]
+    # d = {k: v for k, v in valid_keys.items() if v not in (0, None, '')}
+    d = {k: v for k, v in valid_keys.items() if type(v) not in unsupported_types}
     st.query_params.update(d)
+    if pop_default_values:
+        try:
+            default_instance = type(instance)()
+        except Exception:
+            return
+        for key, default_value in dataclasses.asdict(default_instance).items():
+            if key in st.query_params and st.query_params[key] == str(default_value):
+                st.query_params.pop(key)
 
 
 def get_inputs():
