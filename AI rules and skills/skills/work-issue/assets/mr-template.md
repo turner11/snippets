@@ -14,5 +14,3 @@
 - [ ] Manual smoke-test: <specific steps to reproduce the fix from the issue>
 
 Closes #<number>
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)

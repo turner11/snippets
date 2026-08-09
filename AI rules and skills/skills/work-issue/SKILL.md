@@ -1,11 +1,19 @@
 ---
 name: work-issue
-description: "Work on a GitLab issue using TDD (Red→Green→Refactor) with a clean branch and draft PR. Trigger this skill whenever the user wants to pick up, fix, implement, or start working on a GitHub issue — including phrases like 'work on issue', 'fix bug #N', 'pick up an issue', 'what should I work on', or 'start a new task'. Usage: /work-issue [issue-number]"
+description: >-
+  Works on a GitLab issue using TDD (Red→Green→Refactor) with a clean branch and
+  draft MR. Use when the user wants to pick up, fix, implement, or start work on
+  a GitLab issue — e.g. "work on issue", "fix bug #N", "pick up an issue", or
+  "start a new task". Usage: /work-issue [issue-number]
 argument-hint: "[issue-number]"
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, Agent, terminal, powershell, glab
+disable-model-invocation: true
 ---
 
-Work on a GitLub issue from the repo using TDD. Argument: `$ARGUMENTS`
+Work on a GitLab issue from the repo using TDD. Argument: `$ARGUMENTS`
+
+**GitLab CLI:** all issue/MR commands use `glab`. If `glab` is not on `PATH`, fall back to `~/.local/bin/glab` (
+substitute that path in every command below).
 
 ## Step 1 — Parse Arguments
 
@@ -15,9 +23,9 @@ Otherwise (non-numeric string, URL, negative number, etc.) → inform the user t
 
 ## Step 2 — Fetch & Rank Open Issues
 
-Fetch open issues:
+Fetch open issues as JSON (fields include `iid`, `title`, `labels`, `upvotes`, `created_at`):
 ```bash
-<REPLACE>
+glab issue list --per-page 100 -O json
 ```
 
 **Rank by (in order):**
@@ -38,7 +46,7 @@ Ask the user which issue number they'd like to work on.
 ## Step 3 — Read the Issue & Explore Context
 
 ```bash
-<REPLACE>
+glab issue view <number> --comments
 ```
 
 If the command fails (issue doesn't exist, permissions error, etc.), report the error clearly and return to Step 2.
@@ -114,9 +122,12 @@ Write the **minimal** code change to make the failing tests pass.
 
 Report: `🟢 Green: <N> test(s) passing`
 
-Commit prefix based on labels:
+Commit prefix:
+-[`COMPONENT / TOPIC`]
+followed by based on labels:
 - Issue has `bug` label → `fix:`
 - Otherwise → `feat:`
+  e.g. `[LLM] fix:`
 
 ```
 <prefix> <short description>
@@ -148,7 +159,7 @@ If any pre-existing tests break, investigate and fix before proceeding. Do not p
 
 Report: `✅ Full suite: <N> tests passing, 0 failures`
 
-## Step 9 — Push + Open Draft PR
+## Step 9 — Push + Open Draft MR
 
 ```bash
 git push -u origin <branch-name>
@@ -160,16 +171,25 @@ git pull --rebase origin main
 git push -u origin <branch-name>
 ```
 
-Then open a draft PR using the template in `assets/pr-template.md`. Populate the template with:
+Then open a draft MR using the template in `assets/mr-template.md`. Populate the template with:
+
+- The issue number for `Closes #<number>`.
 - A 1-3 sentence summary of the change.
 - The list of files changed and what was modified in each.
 - The number of new tests added.
 - Confirmation that the full suite passes.
 - Specific manual smoke-test steps from the issue.
-- The issue number for `Closes #<number>`.
 
-```bash
-<REPLACE>
+Write the filled-in template to a temp file, then create the MR (source branch defaults to the current branch).
+PowerShell:
+
+```powershell
+glab mr create --draft --target-branch main --title "<issue title>" --description (Get-Content -Raw <filled-template-file>) --remove-source-branch --yes
 ```
 
-Return the PR URL to the user.
+bash equivalent: `--description "$(cat <filled-template-file>)"`.
+
+If `glab mr create` reports an MR already exists for this branch, open it with `glab mr view --web` instead of creating
+a duplicate.
+
+Return the MR URL to the user.
